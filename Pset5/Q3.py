@@ -1,6 +1,7 @@
 import time
 from scipy.interpolate import griddata
-
+import numpy as np
+import Q2
 
 """
 I would like to give credit where its due and thank Thomas Vandal for helping 

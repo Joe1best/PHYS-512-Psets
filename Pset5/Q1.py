@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-def cylinder(n,R,pot):
+def cylinder(n,R,pot,bump=None):
     """
     Function that initializes the boundary conditions and the mask for a 3-D 
     cylinder of radius R and lenght L. This is done so the cylinder is centered
@@ -32,6 +32,16 @@ def cylinder(n,R,pot):
     cond = x**2+y**2 <= R**2
     mask[cond] = True
     bc[cond] = pot
+    
+    if bump is not None: 
+        x_center_b = R*np.cos(bump[0])
+        y_center_b = R*np.sin(bump[0])
+        bump_r = bump[1]*R
+        
+        cond_bump = (x-x_center_b)**2+(y-y_center_b)**2 <=bump_r**2
+        mask[cond_bump] = True
+        bc[cond_bump] = pot
+    
     V = bc.copy()
     
     return V,bc,mask,x,y
