@@ -23,7 +23,7 @@ def cg(bc,mask,maxIter=10000,V0=None,thresh=1e-2):
         r -= alpha*Ap
         rtr_new = np.sum(r*r)
         beta = rtr_new/rtr
-        p = r+beta*p
+        p = r + beta*p
         rtr = rtr_new
         if rtr < thresh:
             fi = time.time()-st

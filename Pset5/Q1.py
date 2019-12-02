@@ -17,12 +17,11 @@ def cylinder(n,R,pot):
         - mask (array): mask of the cylinder
         - x, y (array): defines the grid of our space
     """
-    midSlice = n//2
-    s = np.linspace(0,n,n)
+    #Centered the cylinder at (0,0)
+    s = np.arange(-n/2,n/2) #defined it like that so i dont get any funky error with logs
     x,y = np.meshgrid(s,s)
 
-    V = np.zeros(x.shape)
-    bc = 0*V 
+    bc = np.zeros([n,n])
 
     mask = np.zeros([n,n],dtype='bool')
     mask[0,:] = True
@@ -30,8 +29,7 @@ def cylinder(n,R,pot):
     mask[:,0] = True
     mask[:,-1] = True
 
-    center_x, center_y = n//2,n//2
-    cond = (x-center_x)**2+(y-center_y)**2 <= R**2
+    cond = x**2+y**2 <= R**2
     mask[cond] = True
     bc[cond] = pot
     V = bc.copy()
@@ -162,15 +160,15 @@ def plot_three_results(V,V_true,d,sp,x,y,figsize=(20,6)):
     E_true_fiveP = np.gradient(V_true_fiveP)
     
     fig, ax = plt.subplots(1,3,figsize=figsize)
-    ax0 = ax[0].pcolormesh(V, vmin=0,vmax=1)
-    ax[0].quiver(x[::10,::10].ravel(),y[::10,::10].ravel(),-E[1],-E[0])
+    ax0 = ax[0].pcolormesh(x,y,V)
+    ax[0].quiver(x[::sp,::sp],y[::sp,::sp],-E[1],-E[0])
     fig.colorbar(ax0, ax=ax[0])
     ax[0].set_title('Numerical Solution')
-    ax1 = ax[1].pcolormesh(V_true,vmin=0,vmax=1)
-    ax[1].quiver(x[::10,::10].ravel(),y[::10,::10].ravel(),-E_true_fiveP[1],-E_true_fiveP[0])
+    ax1 = ax[1].pcolormesh(x,y,V_true)
+    ax[1].quiver(x[::sp,::sp],y[::sp,::sp],-E_true_fiveP[1],-E_true_fiveP[0])
     ax[1].set_title('Analytic solution')
     fig.colorbar(ax1, ax=ax[1])
-    ax2 = ax[2].pcolormesh(d,vmin=0,vmax=1)
+    ax2 = ax[2].pcolormesh(d)
     fig.colorbar(ax2, ax=ax[2])
     ax[2].set_title('Density')
     ax[0].set_xlabel("X pixels")
