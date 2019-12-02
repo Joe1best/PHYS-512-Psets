@@ -74,9 +74,10 @@ def get_laplacian(A,mask,copy=False):
     
     return temp
 
-def true_V(x,y,R,n,pot):
+def true_V(x,y,R,n,pot,bc,mask):
     """
     Calculates the real potential using the expected formula of the potential
+    """
     """
     cx,cy = n//2,n//2
     cond = (x-cx)**2+(y-cy)**2 <= R**2
@@ -90,6 +91,13 @@ def true_V(x,y,R,n,pot):
     slope=1/temp_V[cx,0]
     true_V = -slope*true_V+pot
     true_V[cond] = pot
+    """
+    dv = bc[0, 0] - pot
+    logr = np.log(np.sqrt(x**2 + y**2))
+    lam = dv / (logr[0, 0] - logr[n//2, n//2+R])
+    const = pot - lam*logr[n//2, n//2+R]
+    true_V = lam*logr + const
+    true_V[mask] = bc[mask]
 
     return true_V
 
