@@ -36,4 +36,4 @@ def cg(bc,mask,maxIter=10000,V0=None,thresh=1e-2):
                   f" poorly. This took {fi}s")
             break 
     V[mask] = bc[mask] 
-    return V
+    return V, k
