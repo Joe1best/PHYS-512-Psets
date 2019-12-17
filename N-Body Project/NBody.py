@@ -146,11 +146,16 @@ class NBody:
         T = K + P
         return T 
     
-    def evolve(self,nsteps=1,file_save=None):
+    def evolve(self,nsteps=1,file_save=None,file_save_pos=None):
         """
         Evolves the system and saves the energy along with position for further 
         analysis. The evolution uses the leapfrog method, which is written in the 
         util.py file
+        Input(s):
+            - nsteps (int): how many steps per evolution before it saves a result
+            - file_save (file): File in which we want to save the total energy of the system
+            - file_save_pos (file,int): First entry is the file in which we want to save the 
+            energy is, second entry is the number of particles we want to track.
         """
         for i in range(nsteps):
             F = self.forces_pctls()
@@ -162,4 +167,7 @@ class NBody:
         if file_save is not None:
             file_save.write(f"{energy}\n")
             file_save.flush()
+        if file_save_pos is not None:
+            file_save_pos[0].write(f"{self.posP[:file_save_pos[1]]}\n")
+            file_save_pos[0].flush()
         return energy,self.posP
