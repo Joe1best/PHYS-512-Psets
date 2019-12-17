@@ -7,8 +7,8 @@ import particle as P
 import NBody as nb
 
 def animate(i):
-    global g,ax,fig
-    g.evolve()
+    global g,ax,fig,f
+    g.evolve(file_save=f)
     ptcl.set_data(g.posP[:,0],g.posP[:,1])
     return ptcl,
 
@@ -22,7 +22,7 @@ init_mas = [mass for t in range(npart)]
 
 npart_specific = np.array([[gridsize/2,gridsize/2+10],[gridsize/2,gridsize/2-10]])
 npart_specificVel = np.array([[0.1,0],[-0.1,0]])
-
+f = open('Part2.txt','w')
 s = P.system_init(npart,size,init_mas,npart_specific=npart_specific,npart_specificVel=npart_specificVel)
 
 dt = 5
@@ -48,3 +48,4 @@ ptcl, = ax.plot([],[],'*',markersize=10,color='black')
 an = animation.FuncAnimation(fig,animate,frames=niter,interval=dt,repeat=True)
 
 an.save(Title, writer='imagemagick')
+f.close()

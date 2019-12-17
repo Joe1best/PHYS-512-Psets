@@ -83,7 +83,8 @@ class system_init:
                 - npart_specific (array): Specified inital conditions of the particles
             """
             init_cond = []
-            if npart_specific!=0:
+            
+            if np.isscalar(npart_specific)==False:
                 if npart_specific is None: 
                     l = 0
                 else: 
@@ -91,7 +92,7 @@ class system_init:
                     for k in range(l):
                         vel = (npart_specific[k][0], npart_specific[k][1])
                         init_cond.append(vel)
-                
+            
                 for p in range(npart-l):
                     vel = (np.random.normal()*maxSpeed, np.random.normal()*maxSpeed)
                     init_cond.append(vel)
@@ -102,7 +103,7 @@ class system_init:
             return init_cond
         
         def initial_mass(size,init_mass,posP=None,soft=None):
-            if self.cosmos is None:
+            if self.cosmos == False:
                 return np.array([init_mass.copy()]).T
             else: 
                 posP = np.rint(posP).astype('int') % size[0]
