@@ -7,8 +7,8 @@ import particle as P
 import NBody as nb
 
 def animate(i):
-    global g,ax,fig,energy_file
-    g.evolve(nsteps=10,file_save=energy_file)
+    global g,ax,fig,energy_file,pos_file,N
+    g.evolve(nsteps=10,file_save=energy_file,file_save_pos=[pos_file,N_track])
     ptcl.set_data(g.densities)
     ptcl.set_cmap(plt.get_cmap('inferno'))
     return ptcl,
@@ -22,7 +22,11 @@ mass = 1/npart
 init_mas = [mass for t in range(npart)]
 soft = 0.8
 s = P.system_init(npart,size,init_mas,npart_specific=None,npart_specificVel=velInit,boundary_type=boundary_type)
+
 energy_file = open('Part3_NonPeriodic_Energy.txt','w')
+pos_file = open('Part3_NonPeriodic_Position.txt','w')
+N_track = 40
+
 
 dt = 5
 g = nb.NBody(size,s,dt,soft=soft,boundary_type=boundary_type)
@@ -45,6 +49,6 @@ ax.set_title(T,fontsize=labelsize)
 ptcl = ax.imshow(g.densities,origin='lower',vmin=g.densities.min(),vmax=g.densities.max())
 plt.colorbar(ptcl)
 
-an = animation.FuncAnimation(fig,animate,frames=niter,interval=10,repeat=True)
 
+an = animation.FuncAnimation(fig,animate,frames=niter,interval=10,repeat=True)
 an.save(Title, writer='imagemagick')
