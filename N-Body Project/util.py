@@ -1,0 +1,24 @@
+import numpy as np
+
+
+def evolve(posP,velocityP,mass,f,dt,size):
+    """
+    Evolves the particle's position and momentum using the leap frog method seen in class
+    Inputs: 
+        - f_current (array): The forces on the particle 
+        - f_new (array): changed forces on the particle 
+        - dt (float): time step in seconds 
+    """
+    #print (velocity.shape,f.shape,mass.shape,"icitte")
+    velocityP = velocityP+f*dt/mass
+
+    # update position
+    posP = posP+velocityP*dt
+    posP = posP%size
+    return posP,velocityP 
+
+def calculate_dist(grid,pos):
+    """
+    Calculates the position between a grid point and a particle's position
+    """
+    return np.sqrt((grid[0]-pos[0])**2+(grid[1]-pos[1])**2)
