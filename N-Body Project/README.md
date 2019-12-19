@@ -4,7 +4,7 @@ This is the repository for the N-Body simulation done for PHYS-512 final project
 according to the [Project Guidelines](https://github.com/Joe1best/PHYS-512-Psets/blob/master/N-Body%20Project/project_guidelines.pdf). 
 
 To approach this project, I used the Particle Mesh (PM) method described in more details below. Important to note that this project is only
-implemented in 2-D for the time being. Further work will see this implemented in N-dimensions. The results for each question can be found in the [gifs folder](https://github.com/Joe1best/PHYS-512-Psets/tree/master/N-Body%20Project/gifs).
+implemented in 2-D for the time being. Further work will see this implemented in N-dimensions. The results for each question can be found in the [gifs folder](https://github.com/Joe1best/PHYS-512-Psets/tree/master/N-Body%20Project/gifs). Methods of setting up and running the simulation can be found in the python file allocated for each part.
 
 ## Particle Mesh 
 
